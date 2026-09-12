@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Молодёжный парламент м.о. Луховицы</title>
+  <style>
+    :root {
+      --bg: #070b16;
+      --bg-soft: #0c1224;
+      --ink: #eef2ff;
+      --muted: #9fb0d6;
+      --accent: #f9ca67;
+      --accent-2: #ffd78d;
+      --line: rgba(249, 202, 103, 0.28);
+      --card: rgba(255, 255, 255, 0.07);
+      --radius: 22px;
+      --radius-sm: 14px;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        radial-gradient(1200px 700px at 5% -10%, #1c2d55 0%, transparent 65%),
+        radial-gradient(1000px 600px at 95% 0%, #19365b 0%, transparent 58%),
+        linear-gradient(160deg, var(--bg) 0%, #0a101f 35%, var(--bg-soft) 100%);
+      background-attachment: fixed;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 26px 18px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.11) 0, transparent 45%);
+      opacity: 0.18;
+      mix-blend-mode: soft-light;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 8px 0 18px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-mark {
+      width: 56px;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background: linear-gradient(140deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      color: #1f2a44;
+      font-size: 30px;
+      font-weight: 800;
+      font-family: Manrope, Inter, sans-serif;
+      box-shadow: 0 18px 35px rgba(249, 202, 103, 0.32);
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .logo p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .menu {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .menu a {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #dce5ff;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      background: rgba(11, 18, 35, 0.38);
+    }
+
+    .menu a:hover {
+      background: rgba(249, 202, 103, 0.14);
+      color: #fff;
+      border-color: rgba(249, 202, 103, 0.58);
+    }
+
+    .hero {
+      position: relative;
+      border-radius: var(--radius);
+      padding: clamp(26px, 4vw, 44px);
+      overflow: hidden;
+      margin-top: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(160deg, rgba(8, 15, 33, 0.78), rgba(16, 33, 63, 0.72));
+      backdrop-filter: blur(5px);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -160px;
+      top: -120px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249, 202, 103, 0.33), rgba(249, 202, 103, 0) 65%);
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0) translateX(0); }
+      to { transform: translateY(24px) translateX(-24px); }
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.9rem);
+      font-family: Manrope, Inter, sans-serif;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: #c8d3ed;
+      max-width: 65ch;
+      margin: 14px 0 0;
+      line-height: 1.6;
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .pill span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      color: #ebf2ff;
+      background: rgba(249, 202, 103, 0.08);
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+    }
+
+    .hero-card h3 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #c7d5f1;
+      line-height: 1.6;
+    }
+
+    .grid,
+    .metrics,
+    .news {
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .metrics {
+      grid-template-columns: repeat(3, minmax(140px, 1fr));
+    }
+
+    .card,
+    .panel {
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 18px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      transition: 0.25s;
+    }
+
+    .card:hover,
+    .panel:hover {
+      border-color: rgba(249, 202, 103, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .metric {
+      font-size: 2.2rem;
+      color: var(--accent-2);
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .card h4,
+    .panel h4 {
+      margin: 10px 0 8px;
+      font-family: Manrope, Inter, sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .card p,
+    .panel p {
+      color: #c8d5f0;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    .grid.two,
+    .news {
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section h3 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      font-family: Manrope, Inter, sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .sub {
+      color: #a3b4d8;
+      margin: 0;
+    }
+
+    .split {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .timeline {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+    }
+
+    .timeline li {
+      padding: 0 0 12px 16px;
+      position: relative;
+      color: #d8e2f7;
+    }
+
+    .timeline li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(249, 202, 103, 0.2);
+    }
+
+    .timeline li strong {
+      color: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 0 6px 6px 0;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 0.78rem;
+      color: #1f2f4c;
+      background: #ffd788;
+      font-weight: 600;
+    }
+
+    .cta {
+      margin-top: 24px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(249, 202, 103, 0.45);
+      background: linear-gradient(135deg, rgba(249, 202, 103, 0.18), rgba(255, 215, 141, 0.03));
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta p {
+      margin: 0;
+      color: #f3f6ff;
+      max-width: 64ch;
+    }
+
+    .btn {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-right: 8px;
+      margin-top: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: #141f3a;
+      color: #eaf0ff;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #1e2c52;
+      border-color: rgba(249, 202, 103, 0.7);
+    }
+
+    .disclaimer {
+      margin-top: 18px;
+      color: #8ea1c8;
+      font-size: 0.9rem;
+      border-left: 2px solid rgba(249, 202, 103, 0.55);
+      padding-left: 10px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: .5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      margin-top: 26px;
+      color: #9cb0d3;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics,
+      .grid.two,
+      .news,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .menu {
+        width: 100%;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="logo">
+        <div class="logo-mark">л</div>
+        <div>
+          <h1>Молодёжный парламент м. о. Луховицы</h1>
+          <p>Городская площадка для общественной практики и молодежного лидерства</p>
+        </div>
+      </div>
+
+      <nav class="menu" aria-label="Основная навигация">
+        <a href="#report">Итоги 2025</a>
+        <a href="#plan">Планы 2026</a>
+        <a href="#media">Медиа</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </header>
+
+    <section class="hero reveal">
+      <div>
+        <h2>Самопрезентация Молодёжного парламента</h2>
+        <p>
+          Мы собираем инициативы, которые остаются не на уровне лозунгов, а доходят до реализации. В 2025 году это выразилось в 38 мероприятиях и реальном охвате 750 молодых жителей округа. В 2026 мы продолжаем расти по нацеленным направлениям: гражданская активность, патриотическая память, вовлечение в проекты и диалог с властью.
+        </p>
+        <div class="pill">
+          <span>38 мероприятий</span>
+          <span>750 охваченных людей</span>
+          <span>Цель 2026 — 1000 участников</span>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3>Где нас искать</h3>
+        <ul>
+          <li>Telegram: <a href="https://t.me/mpluhov" target="_blank" rel="noreferrer">@mpluhov</a></li>
+          <li>ВК: <a href="https://vk.ru/mp_luhovitsy" target="_blank" rel="noreferrer">mp_luhovitsy</a></li>
+          <li>Стиль публикаций: отчёты, анонсы, обратная связь, партнёрские инициативы</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section" id="report">
+      <h3>Ключевые цифры 2025</h3>
+      <p class="sub">Отчётный период по итогам года, на котором строится текущий план.</p>
+      <div class="metrics">
+        <article class="card reveal">
+          <p class="metric">38</p>
+          <h4>Мероприятий</h4>
+          <p>Лекции, встречи, творческие и спортивные активности, общественные акции.</p>
+        </article>
+        <article class="card reveal">
+          <p class="metric">750</p>
+          <h4>Охват</h4>
+          <p>Людей, вовлечённых в деятельность за период, включая участившиеся публичные форматы.</p>
+        </article>
+        <article class="card reveal">
+          <p class="metric">3</p>
+          <h4>Направления</h4>
+          <p>Депутатский корпус и молодёжь, патриотическое воспитание, коммуникации и кадровое развитие.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div class="panel reveal">
+        <h4>Направление 1: депутаты + молодёжь</h4>
+        <ul class="timeline">
+          <li><strong>Совместные инициативы.</strong> Публичные и организационные акции с представителями Совета депутатов.</li>
+          <li><strong>Институциональная поддержка.</strong> Информационное сопровождение и канал доведения предложений.</li>
+          <li><strong>Нормотворческая практика.</strong> Участие в обсуждении вопросов округа, включая общественные инициативы.</li>
+        </ul>
+      </div>
+      <div class="panel reveal">
+        <h4>Направление 2: патриотика и связь с историей</h4>
+        <ul class="timeline">
+          <li><strong>Память.</strong> Акции к датам и памятные встречи с ветеранами, поддержка волонтёрских форматов.</li>
+          <li><strong>Диалог поколений.</strong> Привлечение молодёжи в социально значимые проекты на уровне микро-сообществ.</li>
+          <li><strong>Публичная активность.</strong> Формирование культуры участия и личной вовлечённости, а не только наблюдения.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Что мы сделали в 2025</h3>
+      <div class="grid two">
+        <article class="panel reveal">
+          <h4>День России: творческий блок</h4>
+          <p>Организация мастер-класса по росписи матрешек для 100 участников: проект с заметным визуальным и социальным эффектом, который собрал семьи и детей.</p>
+        </article>
+        <article class="panel reveal">
+          <h4>Интеллектуальный формат «Триатлит»</h4>
+          <p>Турнир на знание литературы и публичное выступление: 25 участников, авторские выступления и защита позиций в живой дискуссии.</p>
+        </article>
+        <article class="panel reveal">
+          <h4>Выездной мастер-класс в с. Врачово-Горки</h4>
+          <p>Создание свечей и открыток, знакомство с аквагримом и групповая работа в неформальной детской среде.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="plan">
+      <h3>Стратегия и план на 2026</h3>
+      <div class="split">
+        <article class="panel reveal">
+          <h4>Стратегия</h4>
+          <p>Главная цель — развитие потенциала молодёжи через системную работу: наставничество, поддержка инициатив и долгосрочные проекты с измеримым результатом.</p>
+        </article>
+        <article class="panel reveal">
+          <h4>План</h4>
+          <ul class="timeline">
+            <li><strong>Охват:</strong> рост до <strong>1000</strong> участников.</li>
+            <li><strong>Контент:</strong> усиление присутствия в VK и Telegram с регулярным форматом постинга.</li>
+            <li><strong>Инициативы:</strong> минимум 5 новых инициатив к концу 2026 года.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="media">
+      <h3>Актуальный медиакомплект (анализ источников)</h3>
+      <p class="sub">Telegram даёт внятный срез: от спортивных и творческих событий до образовательных инициатив (например, «Избирательный диктант 2026»).</p>
+      <div class="news">
+        <article class="panel reveal">
+          <div>
+            <span class="tag">Лето и осень</span>
+            <span class="tag">#НашиЛуховиц</span>
+          </div>
+          <h4>Ритм контента</h4>
+          <p>Событийный формат: съезд, спортивные матчи, гуманитарные акции, встречи с населением и партнёрами.</p>
+        </article>
+        <article class="panel reveal">
+          <div>
+            <span class="tag">Гражданская тема</span>
+            <span class="tag">#ИзбирательныйДиктант2026</span>
+          </div>
+          <h4>Образовательные запуски</h4>
+          <p>Массовая активность вокруг проверки избирательной грамотности: онлайн и офлайн форматы, понятная подача сложных тем.</p>
+        </article>
+        <article class="panel reveal">
+          <div>
+            <span class="tag">VK</span>
+            <span class="tag">Ограничение доступа</span>
+          </div>
+          <h4>Что удалось по VK</h4>
+          <p>Доступ к деталям ленты по VK напрямую из текущей среды закрыт (HTTP 418). Поэтому для верификации будем опираться на официальный контент-канал и отчётные материалы.</p>
+        </article>
+      </div>
+      <p class="disclaimer">Примечание: по требованию был сделан анализ VK-источника. Технически сервер VK возвращает блокировку по типу 418 без авторизации, поэтому глубинный разбор постов из VK недоступен в этой сессии.</p>
+    </section>
+
+    <section class="cta" id="contacts">
+      <div>
+        <strong style="font-size:1.1rem">Готовы к сотрудничеству или включению в мероприятие?</strong>
+        <p>Оставьте заявку в мессенджерах. Если хотите, добавлю форму обратной связи с вашим почтовым ящиком или Telegram-ботом.</p>
+      </div>
+      <div>
+        <a class="btn" href="https://t.me/mpluhov" target="_blank" rel="noreferrer">Telegram</a>
+        <a class="btn" href="https://vk.ru/mp_luhovitsy" target="_blank" rel="noreferrer">VK</a>
+        <a class="btn" href="#">Связь</a>
+      </div>
+    </section>
+
+    <footer>Сайт-представление для самопрезентации Молодёжного парламента м.о. Луховицы.</footer>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((items) => {
+      items.forEach((item) => {
+        if (item.isIntersecting) {
+          item.target.classList.add('visible');
+          observer.unobserve(item.target);
+        }
+      });
+    }, { threshold: 0.16 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
