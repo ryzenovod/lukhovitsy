@@ -23,6 +23,8 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
+from export_qr import draw_pdf_qr
+
 
 ROOT = Path(__file__).resolve().parents[1]
 WIDTH, HEIGHT = 1440, 810
@@ -314,7 +316,10 @@ class Deck:
         self.photo(images[0].attrs["src"], 72, 160, 527, 451, photo_crop=(0, 765, 1170, 1766))
         self.rect(352, 419, 365, 290, GREEN)
         self.photo(images[1].attrs["src"], 363, 430, 343, 257)
-        self.text(section.first("figcaption").text(), 72, 705, 16, 610, "Semibold")
+        captions = section.all("figcaption")
+        assert len(captions) == 2, "Both memory events need separate photo captions"
+        self.text(captions[0].text(), 72, 630, 15, 270, "Semibold", leading=1.4)
+        self.text(captions[1].text(), 363, 705, 15, 343, "Semibold", leading=1.4)
         copy = section.first(cls="chapter-copy")
         top = self.title(copy.first("h2").text(), 780, 138, 570, 77)+32
         body = [c for c in copy.children if isinstance(c, Element) and c.tag == "p"]
@@ -373,19 +378,20 @@ class Deck:
     def contacts(self, section):
         self.begin(section, GREEN)
         self.text(self.document.first(cls="brand-label").text(), 72, 46, 18, 610, "Semibold", leading=1.3)
-        self.title(section.first("h2").text(), 72, 156, 1200, 147, LIME)
-        self.text(section.first(cls="contact-bottom").first("p").text(), 77, 361, 28, 880, leading=1.4)
+        self.title(section.first("h2").text(), 72, 132, 1200, 133, LIME)
+        self.text(section.first(cls="contact-bottom").first("p").text(), 77, 321, 28, 1120, leading=1.4)
         contacts = section.first(cls="contact-links").all("a")
         for index, item in enumerate(contacts):
-            x, top = 72+index*674, 494
-            self.rect(x, top, 622, 193, PAPER if index == 0 else LIME)
+            x, top = 72+index*674, 434
+            self.rect(x, top, 622, 290, PAPER if index == 0 else LIME)
             outer_span = item.first("span")
             handle = outer_span.first("small").text()
             label = outer_span.text().replace(handle, "").strip()
-            self.text(label, x+30, top+26, 38, 510, "ExtraBold", INK, 1.2)
-            self.text(handle, x+32, top+100, 25, 510, "Semibold", INK, 1.3)
-            self.arrow(x+554, top+39, INK, 28)
-            self.canvas.linkURL(item.attrs["href"], (x, HEIGHT-top-193, x+622, HEIGHT-top), relative=0, thickness=0)
+            self.text(label, x+32, top+39, 35, 308, "ExtraBold", INK, 1.2)
+            self.text(handle, x+34, top+105, 22, 308, "Semibold", INK, 1.3)
+            self.arrow(x+34, top+213, INK, 28)
+            draw_pdf_qr(self.canvas, item.attrs["href"], x+368, HEIGHT-top-32-222, 222)
+            self.canvas.linkURL(item.attrs["href"], (x, HEIGHT-top-290, x+622, HEIGHT-top), relative=0, thickness=0)
             self.audit[-1]["links"].append(item.attrs["href"])
         self.end()
 

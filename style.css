@@ -1689,3 +1689,28 @@ h2 {
 @media(max-width:760px){.events-intro{padding-top:44px}.direction-grid a{min-height:94px;padding:18px 0}.direction-grid strong{font-size:16px}.direction-grid small{font-size:13px}.downloads{margin-top:28px;justify-content:flex-start}.is-presenting .directions .section-intro h2{font-size:34px}.is-presenting .directions .mandate{margin:0 0 24px}.is-presenting .direction-grid a{padding:18px 0}}
 @media(min-width:761px) and (max-height:780px){.is-presenting .directions .section-intro{margin-bottom:20px}.is-presenting .directions .section-intro h2{font-size:40px}.is-presenting .directions .mandate{font-size:13px;margin-top:12px}.is-presenting .direction-grid a{min-height:83px;padding:13px 0}.is-presenting .direction-grid strong{font-size:15px}.is-presenting .direction-grid small{font-size:12px;margin-top:5px}}
 @media print{.downloads,.events-intro{display:none!important}}
+
+/* Separate photo captions identify the two commemorative events. */
+.memory-event-main{width:83%}
+.memory-event-main .memory-crop{width:100%}
+.memory-event-main figcaption{max-width:60%}
+.memory-event-secondary{position:absolute;right:0;bottom:12px;width:44%;background:var(--green)}
+.memory-photos .memory-event-secondary .memorial-photo{position:static;width:100%;border:6px solid var(--green)}
+.memory-event-secondary figcaption{max-width:none;margin:2px 6px 0;font-size:11px;line-height:1.5}
+
+/* Local QR artwork stays sharp at any screen or print size. */
+.contact-bottom{grid-template-columns:minmax(200px,.7fr) minmax(0,1.4fr);gap:7%;align-items:start}
+.contact-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.contact-links .contact-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:22px;padding:24px;border:1px solid #ffffff24;border-radius:18px;background:var(--paper);color:var(--ink);transition:transform .2s,background .2s}
+.contact-links .contact-card:last-child{background:var(--lime);border:1px solid transparent}
+.contact-links .contact-card:hover{color:var(--ink);transform:translateY(-4px)}
+.contact-links .contact-card>span:first-child{font-size:27px;line-height:1.2}
+.contact-links .contact-card small{color:var(--ink);opacity:.72;font-size:12px;margin-top:7px}
+.contact-qr{width:min(100%,200px);height:auto;aspect-ratio:1;align-self:center;border-radius:10px;background:#fff}
+.contact-links .contact-arrow{position:absolute;right:22px;top:22px;font-size:24px;line-height:1}
+.is-presenting .contacts h2{margin:0 auto 35px}
+.is-presenting .contact-card{padding:20px;gap:18px}
+.is-presenting .contact-qr{width:min(100%,184px)}
+@media(max-width:1100px){.contact-bottom{grid-template-columns:1fr;gap:28px}.contact-bottom>p{max-width:540px}.contact-links{max-width:660px}.contact-links .contact-card>span:first-child{font-size:26px}}
+@media(max-width:760px){.contact-links{gap:12px}.contact-links .contact-card{padding:16px 13px;gap:20px;border-radius:14px}.contact-links .contact-card>span:first-child{font-size:21px}.contact-links .contact-card small{font-size:11px}.contact-links .contact-arrow{display:none}.contact-qr{border-radius:7px}.memory-event-secondary{bottom:0}.memory-photos .memory-event-secondary .memorial-photo{border-width:4px}.memory-event-secondary figcaption{font-size:10px;margin-inline:4px}.is-presenting .contacts h2{margin-bottom:25px}}
+@media(min-width:761px) and (max-height:780px){.is-presenting .contact-bottom{grid-template-columns:minmax(180px,.7fr) minmax(0,1.4fr);gap:6%}.is-presenting .contact-links .contact-card>span:first-child{font-size:24px}.is-presenting .contact-qr{width:min(100%,165px)}.is-presenting .contacts h2{font-size:clamp(60px,7vw,100px);margin-bottom:30px}}
