@@ -62,6 +62,16 @@
     returnFocus?.focus({ preventScroll: true });
   }
 
+  document.querySelector('.direction-grid').addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!presenting || !link) return;
+    const index = slides.findIndex(slide => `#${slide.id}` === link.getAttribute('href'));
+    if (index >= 0) {
+      event.preventDefault();
+      showSlide(index);
+    }
+  });
+
   start.hidden = false;
   start.addEventListener('click', enterPresentation);
   close.addEventListener('click', exitPresentation);
